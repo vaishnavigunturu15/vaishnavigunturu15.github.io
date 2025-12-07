@@ -1,10 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Vaishnavi Portfolio</title>
+    <meta charset="UTF-8" />
+    <title>Vaishnavi Gunturu | Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <h1>Hi, I'm Vaishnavi!</h1>
-    <p>Welcome to my portfolio website.</p>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-left">Vaishnavi Gunturu</div>
+        <div class="nav-right">
+            <a href="index.html">Home</a>
+            <a href="projects.html">Projects</a>
+            <a href="resume.pdf" target="_blank">Resume</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Hi, I'm Vaishnavi.</h1>
+        <p class="tagline">
+            Data and Risk Analytics · Machine Learning · Dashboards and Automation
+        </p>
+        <p>
+            I am a Business Analytics and CIS student at UT Dallas who loves turning messy data into
+            clean insights, dashboards, and models that actually help people make better decisions.
+        </p>
+        <div class="hero-buttons">
+            <a class="btn primary" href="projects.html">View My Projects</a>
+            <a class="btn secondary" href="mailto:your.email@example.com">Contact Me</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <h2>About Me</h2>
+        <p>
+            I enjoy working on projects at the intersection of analytics, technology, and risk. My 
+            experience includes building time series models, automating KPI dashboards, and supporting
+            risk and control assessments. This portfolio highlights some of my favorite projects and
+            what I have learned from them.
+        </p>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section" id="skills">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>Languages</h3>
+                <p>Python, SQL, R, Java</p>
+            </div>
+            <div class="skill-card">
+                <h3>Data and BI</h3>
+                <p>Pandas, NumPy, Excel, Tableau, Power BI, Alteryx</p>
+            </div>
+            <div class="skill-card">
+                <h3>Machine Learning</h3>
+                <p>Regression, Classification, Time Series, PCA, ARIMA, LSTM</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlighted Projects Section -->
+    <section class="section" id="highlight-projects">
+        <h2>Highlighted Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Credit Card Fraud Detection</h3>
+                <p>
+                    Built a machine learning model to detect fraudulent transactions on a highly
+                    imbalanced dataset, comparing logistic regression, random forest, and XGBoost.
+                </p>
+                <a href="projects.html" class="link">View details</a>
+            </div>
+            <div class="project-card">
+                <h3>Stock Price Prediction</h3>
+                <p>
+                    Time series forecasting of Microsoft stock prices using ARIMA and LSTM,
+                    with full EDA and evaluation.
+                </p>
+                <a href="projects.html" class="link">View details</a>
+            </div>
+            <div class="project-card">
+                <h3>Automated KRI Dashboard</h3>
+                <p>
+                    Automated a risk dashboard pipeline using Python and BI tools to reduce
+                    manual reporting effort.
+                </p>
+                <a href="projects.html" class="link">View details</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Vaishnavi Gunturu · <a href="https://github.com/vaishnavigunturu15" target="_blank">GitHub</a></p>
+    </footer>
+
 </body>
 </html>
+
