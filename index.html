@@ -1,183 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vaishnavi Gunturu | Portfolio</title>
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vaishnavi Gunturu — Portfolio</title>
+  <style>
+    :root {
+      --bg: #0f172a;        /* slate-900 */
+      --panel: #111827;     /* gray-900 */
+      --text: #e5e7eb;      /* gray-200 */
+      --muted: #94a3b8;     /* slate-400 */
+      --accent: #22d3ee;    /* cyan-400 */
+      --accent-2: #a78bfa;  /* violet-400 */
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      scroll-behavior: smooth;
+      background: radial-gradient(1200px 600px at 10% 10%, #0b1224 0%, var(--bg) 45%, #0a1020 100%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans";
+    }
+
+    /* Top navigation */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(1.2) blur(8px);
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      border-bottom: 1px solid #1f2937;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px;
+    }
+    .brand { font-weight: 700; letter-spacing: 0.4px; margin-right: auto; color: var(--accent); }
+    .tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tab {
+      border: 1px solid #1f2937; color: var(--text); background: #0b1327;
+      padding: 10px 14px; border-radius: 9px; font-size: 0.95rem; cursor: pointer;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease; text-decoration: none;
+    }
+    .tab:hover { transform: translateY(-1px); border-color: #334155; }
+    .tab.active {
+      background: linear-gradient(145deg, #0b1327, #0f1732);
+      border-color: color-mix(in srgb, var(--accent) 50%, #1f2937);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent), 0 6px 18px rgba(34, 211, 238, 0.12);
+    }
+
+    /* Sections */
+    main { scroll-snap-type: y proximity; }
+    section {
+      min-height: 100vh; scroll-snap-align: start;
+      display: grid; place-items: center;
+      padding: 64px 16px; border-bottom: 1px solid #111827;
+    }
+    .section-inner {
+      max-width: 1100px; width: 100%;
+      display: grid; grid-template-columns: 1.2fr 1fr;
+      gap: 28px; align-items: start;
+    }
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .section-header h1 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: 0.3px; }
+    .chip { font-size: 0.85rem; color: var(--muted); border: 1px dashed #334155; padding: 6px 10px; border-radius: 999px; }
+    .card {
+      background: linear-gradient(180deg, #0b1327 0%, #0b1224 100%);
+      border: 1px solid #1f2937; border-radius: 14px; padding: 18px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+    .muted { color: var(--muted); }
+
+    /* Lists */
+    ul, ol { margin: 0; padding-left: 18px; }
+    li { margin: 6px 0; }
+
+    /* Buttons & inputs */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid #1f2937; background: #0b1327; color: var(--text);
+      padding: 10px 14px; border-radius: 10px; cursor: pointer; text-decoration: none;
+      transition: transform .15s ease, border-color .2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: #334155; }
+    .btn.primary {
+      border-color: color-mix(in srgb, var(--accent-2) 50%, #1f2937);
+      box-shadow: 0 6px 18px rgba(167, 139, 250, 0.16);
+    }
+
+    /* Projects grid */
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .project {
+      background: linear-gradient(180deg, #0b1327 0%, #0b1224 100%);
+      border: 1px solid #1f2937; border-radius: 14px; padding: 16px;
+    }
+    .project h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .project p { margin: 0 0 12px; color: var(--muted); }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag { border: 1px solid #334155; color: var(--muted); font-size: 0.8rem; border-radius: 999px; padding: 4px 8px; }
+
+    /* Contact form */
+    .form { display: grid; gap: 12px; }
+    .field { display: grid; gap: 6px; }
+    label { font-size: 0.9rem; color: var(--muted); }
+    input, textarea {
+      width: 100%; padding: 12px 12px; border-radius: 10px;
+      border: 1px solid #1f2937; background: #0b1327; color: var(--text); outline: none;
+    }
+    textarea { min-height: 120px; resize: vertical; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .section-inner { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      .brand { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Navigation -->
-    <header class="site-header" id="home">
-        <nav class="nav">
-            <div class="nav-left">
-                &lt;Vaish.dev /&gt;
-            </div>
-            <div class="nav-center">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="#skills">Skills</a>
-                <a href="#contact">Contact</a>
-            </div>
-            <div class="nav-right">
-                <!-- change the file name below to match your actual PDF -->
-                <a class="btn btn-resume" href="resume.pdf" target="_blank" rel="noopener">
-                    Resume
-                </a>
-            </div>
-        </nav>
-    </header>
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <div class="brand">Vaishnavi Gunturu</div>
+      <div class="tabs">
+        <a class="tab active" href="#about">About</a>
+        <a class="tab" href="#skills">Skills</a>
+        <a class="tab" href="#projects">Projects</a>
+        <a class="tab" href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-inner">
-            <p class="hero-eyebrow">Hello, I am</p>
-            <h1 id="hero-title">Vaishnavi Gunturu</h1>
-            <p class="hero-role">Data and Risk Analytics · Machine Learning · Automation</p>
-            <p class="hero-text">
-                I am a Business Analytics and CIS student at UT Dallas who loves turning messy data into
-                clean insights, dashboards, and models that actually help people make better decisions.
-            </p>
-            <div class="hero-buttons">
-                <a class="btn btn-primary" href="#projects">View my projects</a>
-                <a class="btn btn-outline" href="#contact">Contact me</a>
-            </div>
-        </div>
-    </section>
+  <main>
 
-    <!-- About Section -->
-    <section class="section" id="about">
-        <div class="container">
-            <h2>About me</h2>
+    <!-- About -->
+    <section id="about" aria-labelledby="about-title">
+      <div class="section-inner">
+        <div>
+          <div class="section-header">
+            <h1 id="about-title">About me</h1>
+            <span class="chip">Business Analytics + CIS @ UT Dallas</span>
+          </div>
+          <div class="card">
             <p>
-                I enjoy working on projects at the intersection of analytics, technology, and risk.
-                My experience includes building time series models, automating KPI dashboards, and supporting
-                risk and control assessments. I like owning the whole pipeline from raw data to a clear story.
+              I am a Business Analytics and Computer Information Systems student at UT Dallas with a strong focus on data, technology, and problem-solving. I enjoy turning ambiguity into structure — whether that means analyzing data, building dashboards, developing backend logic, or creating automated workflows that save time and reduce error. My experience includes supporting cybersecurity, risk, and client-focused operations, where I’ve developed practical skills in Python, SQL, Tableau, Excel modeling, and system optimization.
             </p>
-            <p>
-                Outside of class and internships, I am building portfolio projects that mirror real problems:
-                fraud detection, risk KRIs, airline operations, and anomaly detection in customer behavior.
+            <p class="muted">
+              I approach problems analytically and ask precise questions to understand root causes before building solutions. I’m motivated by continuous improvement, both technically and personally, and I constantly push myself to expand my toolkit through new frameworks, AI tools, and hands-on experimentation. Outside of work and school, you’ll find me in the gym, taking notes from books and podcasts, or helping friends think through their own goals and systems — all part of my drive to make every day more intentional and productive.
             </p>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section class="section" id="projects">
-        <div class="container">
-            <h2>Projects</h2>
-            <div class="projects-grid">
-                <article class="project-card">
-                    <h3>Customer Anomaly Detection</h3>
-                    <p>
-                        Unsupervised ML system using Isolation Forest to flag risky customer behavior
-                        based on spending patterns, transaction volume, night activity, and countries used.
-                        Includes synthetic data generation, visual analysis, and a CLI scoring tool.
-                    </p>
-                    <a href="https://github.com/vaishnavigunturu15/customer-anomaly-detection" target="_blank" rel="noopener" class="project-link">
-                        View on GitHub
-                    </a>
-                </article>
-
-                <article class="project-card">
-                    <h3>Credit Card Fraud Detection</h3>
-                    <p>
-                        Built a machine learning workflow to detect fraudulent card transactions on a highly
-                        imbalanced dataset, comparing logistic regression, random forest, and gradient boosting
-                        with precision and recall focused evaluation.
-                    </p>
-                    <a href="#" class="project-link">
-                        GitHub repo (coming soon)
-                    </a>
-                </article>
-
-                <article class="project-card">
-                    <h3>Airline Operations Dashboard</h3>
-                    <p>
-                        Analytics project exploring delays and cancellations by route and airport using SQL,
-                        Python, and BI dashboards. Defined on time performance KPIs and surfaced routes that
-                        drive the most operational pain.
-                    </p>
-                    <a href="#" class="project-link">
-                        GitHub repo (coming soon)
-                    </a>
-                </article>
+            <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+              <a class="btn primary" href="https://www.linkedin.com/in/vgunturu" target="_blank" rel="noopener">LinkedIn</a>
+              <a class="btn" href="https://github.com/yourhandle" target="_blank" rel="noopener">GitHub</a>
+              <a class="btn" href="#projects">View projects</a>
             </div>
+          </div>
         </div>
+        <div class="card">
+          <h2 style="margin:0 0 10px;">Highlights</h2>
+          <ul>
+            <li><strong>Cybersecurity intern:</strong> Risk/control assessments, dashboards, audit readiness.</li>
+            <li><strong>Data & ML analyst:</strong> EDA, feature engineering, PCA, model tuning.</li>
+            <li><strong>Finance intern:</strong> Forecasting, reporting accuracy, stakeholder support.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <!-- Skills Section -->
-    <section class="section" id="skills">
-        <div class="container">
-            <h2>Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-group">
-                    <h3>Languages</h3>
-                    <div class="skill-pills">
-                        <span class="pill">Python</span>
-                        <span class="pill">SQL</span>
-                        <span class="pill">R</span>
-                        <span class="pill">Java</span>
-                    </div>
+    <!-- Skills -->
+    <section id="skills" aria-labelledby="skills-title">
+      <div class="section-inner">
+        <div>
+          <div class="section-header">
+            <h1 id="skills-title">Skills</h1>
+            <span class="chip">Tools I use</span>
+          </div>
+          <div class="card">
+            <h2 style="margin:0 0 8px;">Programming</h2>
+            <ul>
+              <li><strong>Languages:</strong> Python, SQL, Java, R, C#</li>
+              <li><strong>Packages:</strong> Pandas, NumPy, Matplotlib, Seaborn, Plotly</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <h2 style="margin:0 0 8px;">Analytics & visualization</h2>
+          <ul>
+            <li><strong>BI:</strong> Tableau, Power BI, Alteryx, Excel modeling</li>
+            <li><strong>ML:</strong> Linear regression, classification, PCA, ARIMA, LSTM</li>
+            <li><strong>Ops:</strong> Data cleaning, feature engineering, dashboards, automation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" aria-labelledby="projects-title">
+      <div class="section-inner">
+        <div>
+          <div class="section-header">
+            <h1 id="projects-title">Projects</h1>
+            <span class="chip">Placeholders — add yours</span>
+          </div>
+          <div class="card">
+            <div class="grid">
+              <!-- Placeholder cards: duplicate and fill in later -->
+              <div class="project">
+                <h3>Project title</h3>
+                <p>Brief description of the project and your impact.</p>
+                <div class="tags">
+                  <span class="tag">Tech 1</span><span class="tag">Tech 2</span><span class="tag">Tech 3</span>
                 </div>
-                <div class="skill-group">
-                    <h3>Data and BI</h3>
-                    <div class="skill-pills">
-                        <span class="pill">Pandas</span>
-                        <span class="pill">NumPy</span>
-                        <span class="pill">Excel</span>
-                        <span class="pill">Tableau</span>
-                        <span class="pill">Power BI</span>
-                        <span class="pill">Alteryx</span>
-                    </div>
+                <div style="margin-top:10px; display:flex; gap:8px;">
+                  <a class="btn" href="#" target="_blank" rel="noopener">Code</a>
+                  <a class="btn primary" href="#" target="_blank" rel="noopener">Live</a>
                 </div>
-                <div class="skill-group">
-                    <h3>ML and Analytics</h3>
-                    <div class="skill-pills">
-                        <span class="pill">Regression</span>
-                        <span class="pill">Classification</span>
-                        <span class="pill">Time series</span>
-                        <span class="pill">Anomaly detection</span>
-                        <span class="pill">ARIMA</span>
-                        <span class="pill">LSTM (in progress)</span>
-                    </div>
+              </div>
+
+              <div class="project">
+                <h3>Project title</h3>
+                <p>Brief description of the project and your impact.</p>
+                <div class="tags">
+                  <span class="tag">Tech 1</span><span class="tag">Tech 2</span><span class="tag">Tech 3</span>
                 </div>
+                <div style="margin-top:10px; display:flex; gap:8px;">
+                  <a class="btn" href="#" target="_blank" rel="noopener">Code</a>
+                  <a class="btn primary" href="#" target="_blank" rel="noopener">Live</a>
+                </div>
+              </div>
+
+              <div class="project">
+                <h3>Project title</h3>
+                <p>Brief description of the project and your impact.</p>
+                <div class="tags">
+                  <span class="tag">Tech 1</span><span class="tag">Tech 2</span><span class="tag">Tech 3</span>
+                </div>
+                <div style="margin-top:10px; display:flex; gap:8px;">
+                  <a class="btn" href="#" target="_blank" rel="noopener">Code</a>
+                  <a class="btn primary" href="#" target="_blank" rel="noopener">Live</a>
+                </div>
+              </div>
             </div>
+
+            <div style="margin-top:14px;">
+              <a class="btn" href="#contact">Get in touch</a>
+            </div>
+          </div>
         </div>
+
+        <div class="card">
+          <h2 style="margin:0 0 8px;">What I enjoy building</h2>
+          <ul>
+            <li><strong>Dashboards:</strong> real-time, accurate, and decision-friendly.</li>
+            <li><strong>Automation:</strong> workflows that reduce error and save time.</li>
+            <li><strong>Data systems:</strong> clean pipelines, practical ML, observable services.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="section" id="contact">
-        <div class="container contact-container">
-            <h2>Contact</h2>
-            <p>
-                The easiest way to reach me is by email. I am open to internship opportunities, project
-                collaborations, and anything that mixes analytics with real impact.
+    <!-- Contact -->
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="section-inner">
+        <div>
+          <div class="section-header">
+            <h1 id="contact-title">Contact</h1>
+            <span class="chip">Say hello</span>
+          </div>
+          <div class="card">
+            <form class="form" action="https://formspree.io/f/yourformid" method="POST">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" placeholder="Your name" required />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@example.com" required />
+              </div>
+              <div class="field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="What would you like to build?" required></textarea>
+              </div>
+              <button class="btn primary" type="submit">Send message</button>
+            </form>
+            <p class="muted" style="margin-top:10px;">
+              Prefer email? vaishnavi.gunturu15@gmail.com · Irving, TX
             </p>
-            <div class="contact-card">
-                <p><strong>Email</strong></p>
-                <p><a href="mailto:your.email@example.com">your.email@example.com</a></p>
-
-                <p><strong>LinkedIn</strong></p>
-                <p><a href="https://www.linkedin.com/in/your-linkedin-handle" target="_blank" rel="noopener">
-                    linkedin.com/in/your-linkedin-handle
-                </a></p>
-
-                <p><strong>GitHub</strong></p>
-                <p><a href="https://github.com/vaishnavigunturu15" target="_blank" rel="noopener">
-                    github.com/vaishnavigunturu15
-                </a></p>
-            </div>
+          </div>
         </div>
+        <div class="card">
+          <h2 style="margin:0 0 8px;">Elsewhere</h2>
+          <ul>
+            <li><strong>LinkedIn:</strong> linkedin.com/in/vgunturu</li>
+            <li><strong>GitHub:</strong> github.com/yourhandle</li>
+            <li><strong>Phone:</strong> 469-343-8757</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>© 2025 Vaishnavi Gunturu</p>
-    </footer>
+  </main>
 
+  <script>
+    // Highlight active tab on scroll and on click
+    const sections = [...document.querySelectorAll("section")];
+    const tabs = [...document.querySelectorAll(".tab")];
+
+    const byId = id => sections.find(s => s.id === id);
+    const activateTab = id => {
+      tabs.forEach(t => t.classList.toggle("active", t.getAttribute("href") === `#${id}`));
+    };
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+          activateTab(entry.target.id);
+          history.replaceState(null, "", `#${entry.target.id}`);
+        }
+      });
+    }, { threshold: [0.6] });
+    sections.forEach(s => io.observe(s));
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", (e) => {
+        e.preventDefault();
+        const id = tab.getAttribute("href").slice(1);
+        activateTab(id);
+        byId(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  </script>
 </body>
 </html>
+
 
 
